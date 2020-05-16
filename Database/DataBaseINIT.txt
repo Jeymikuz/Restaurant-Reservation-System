@@ -18,13 +18,14 @@ GO
 CREATE TABLE [dbo].[Reservation](
 	[ReservationID] [int] NOT NULL ,
 	[TableID] [int] NOT NULL,
-	[FirstName] [char] (30) NOT NULL ,
-	[LastName] [char] (60) NULL ,
-	[Email] [char] (120) NOT NULL ,
-	[PhoneNumber][char] (20) NOT NULL,
+	[FirstName] [nvarchar] (30) NOT NULL ,
+	[LastName] [nvarchar] (60) NULL ,
+	[Email] [nvarchar] (120) NOT NULL ,
+	[PhoneNumber][nvarchar] (20) NOT NULL,
 	[ReservationDate] [datetime] NOT NULL,
 	[ReservationExpire] [datetime] NULL,
-	[ReservationLength] [int] NOT NULL
+	[ReservationLength] [int] NOT NULL,
+    [Accepted] [bit] NOT NULL
 ) ON [PRIMARY]
 GO
 
@@ -37,13 +38,13 @@ GO
 
 CREATE TABLE [dbo].[Order](
 	[OrderID] [int] NOT NULL ,
-	[FirstName] [char] (30) NOT NULL ,
-	[LastName] [char] (60) NULL ,
-	[Email] [char] (120) NOT NULL ,
-	[PhoneNumber][char] (20) NOT NULL,
-	[Address] [char] (60) NOT NULL,
-	[Zip-code] [char] (10) NOT NULL,
-	[City] [char] (30) NOT NULL,
+	[FirstName] [nvarchar] (30) NOT NULL ,
+	[LastName] [nvarchar] (60) NULL ,
+	[Email] [nvarchar] (120) NOT NULL ,
+	[PhoneNumber][nvarchar] (20) NOT NULL,
+	[Address] [nvarchar] (60) NOT NULL,
+	[Zip-code] [nvarchar] (10) NOT NULL,
+	[City] [nvarchar] (30) NOT NULL,
 ) ON [PRIMARY]
 GO
 
@@ -70,19 +71,55 @@ GO
 
 CREATE PROC Add_Reservation
 @ReservationID int,
-@FirstName char(30),
-@LastName char(60),
-@Email char(120),
-@PhoneNumber char(20),
+@TableID int,
+@FirstName nvarchar(30),
+@LastName nvarchar(60),
+@Email nvarchar(120),
+@PhoneNumber nvarchar(20),
 @ReservationDate datetime,
-@ReservationLength int
+@ReservationLength int,
+@Accepted bit
 AS
-INSERT Reservation(ReservationID, FirstName, LastName, Email, PhoneNumber,ReservationDate,ReservationLength)
-VALUES (@ReservationID, @FirstName, @LastName, @Email, @PhoneNumber,@ReservationDate,@ReservationLength)
+INSERT Reservation(ReservationID,TableID, FirstName, LastName, Email, PhoneNumber,ReservationDate,ReservationLength,Accepted)
+VALUES (@ReservationID,@TableID, @FirstName, @LastName, @Email, @PhoneNumber,@ReservationDate,@ReservationLength,@Accepted)
 
 UPDATE Reservation
 SET ReservationExpire= DATEADD(HOUR,@ReservationLength,@ReservationDate)
 WHERE ReservationID=@ReservationID
+GO
+
+CREATE PROCEDURE Reservation_GetByFirstName
+@FirstName nvarchar(60)
+AS
+BEGIN
+	SELECT *
+	FROM Reservation
+	WHERE FirstName = @FirstName;
+
+END
+GO
+
+CREATE PROCEDURE Reservation_GetByLastName
+@LastName nvarchar(60)
+AS
+BEGIN
+	SELECT *
+	FROM Reservation
+	WHERE LastName = @LastName;
+
+END
+GO
+
+CREATE PROCEDURE Reservation_GetByFirstAndLastName
+@FirstName nvarchar(50),
+@LastName nvarchar(60)
+AS
+BEGIN
+	SELECT *
+	FROM Reservation
+	WHERE LastName = @LastName and FirstName= @FirstName;
+
+END
 GO
 
 CREATE PROC Add_Table
@@ -94,7 +131,7 @@ INSERT ReservationTable(TableID,ReservationID,NumberOfChairs)
 VALUES (@TableID,@ReservationID,@NumberOfChairs)
 GO
 
-EXEC Add_Reservation 1,"Jan","Kowalski","jan.kowalski88@gmail.com","+48671877234","2020-06-05 18:00:00",2;
+EXEC Add_Reservation 1,1,"Jan","Kowalski","jan.kowalski88@gmail.com","+48671877234","2020-06-05 18:00:00",2,0;
 GO
 
 EXEC Add_Table 1,null,2;
