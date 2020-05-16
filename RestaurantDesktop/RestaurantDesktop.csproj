@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DC6E0EC0-E0FD-4F83-8E08-FB652867BCE1}</ProjectGuid>
+    <ProjectGuid>{1ADA385F-2A48-4391-A663-4C42D2387C73}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>RestaurantDesktop</RootNamespace>
     <AssemblyName>RestaurantDesktop</AssemblyName>
@@ -75,12 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RestaurantLogicModel\RestaurantLogicModel.csproj">
-      <Project>{cfcc88c8-cf3b-4932-a244-ed1fc50de482}</Project>
-      <Name>RestaurantLogicModel</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
