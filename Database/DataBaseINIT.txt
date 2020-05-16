@@ -16,7 +16,7 @@ USE RestaurantDB
 GO
 
 CREATE TABLE [dbo].[Reservation](
-	[ReservationID] [int] NOT NULL ,
+	[ReservationID] [int] NOT NULL PRIMARY KEY,
 	[TableID] [int] NOT NULL,
 	[FirstName] [nvarchar] (30) NOT NULL ,
 	[LastName] [nvarchar] (60) NULL ,
@@ -37,7 +37,7 @@ CREATE TABLE [dbo].[ReservationTable](
 GO
 
 CREATE TABLE [dbo].[Order](
-	[OrderID] [int] NOT NULL ,
+	[OrderID] [int] NOT NULL PRIMARY KEY,
 	[FirstName] [nvarchar] (30) NOT NULL ,
 	[LastName] [nvarchar] (60) NULL ,
 	[Email] [nvarchar] (120) NOT NULL ,
@@ -70,7 +70,6 @@ ALTER TABLE [dbo].[Order] WITH NOCHECK ADD
 GO
 
 CREATE PROC Add_Reservation
-@ReservationID int,
 @TableID int,
 @FirstName nvarchar(30),
 @LastName nvarchar(60),
@@ -80,12 +79,20 @@ CREATE PROC Add_Reservation
 @ReservationLength int,
 @Accepted bit
 AS
-INSERT Reservation(ReservationID,TableID, FirstName, LastName, Email, PhoneNumber,ReservationDate,ReservationLength,Accepted)
-VALUES (@ReservationID,@TableID, @FirstName, @LastName, @Email, @PhoneNumber,@ReservationDate,@ReservationLength,@Accepted)
+INSERT Reservation(,TableID, FirstName, LastName, Email, PhoneNumber,ReservationDate,ReservationLength,Accepted)
+VALUES (@TableID, @FirstName, @LastName, @Email, @PhoneNumber,@ReservationDate,@ReservationLength,@Accepted)
 
 UPDATE Reservation
 SET ReservationExpire= DATEADD(HOUR,@ReservationLength,@ReservationDate)
-WHERE ReservationID=@ReservationID
+GO
+
+CREATE PROCEDURE Reservation_GetAll
+AS
+BEGIN
+	SELECT *
+	FROM Reservation
+
+END
 GO
 
 CREATE PROCEDURE Reservation_GetByFirstName
@@ -122,6 +129,8 @@ BEGIN
 END
 GO
 
+
+
 CREATE PROC Add_Table
 @TableID int,
 @ReservationID int,
@@ -140,3 +149,11 @@ EXEC Add_Table 3,null,4;
 EXEC Add_Table 4,null,4;
 EXEC Add_Table 5,null,6;
 EXEC Add_Table 6,null,8;
+
+CREATE PROCEDURE GetAllTables
+AS
+BEGIN
+	SELECT *
+	FROM ReservationTable
+END
+GO

@@ -34,6 +34,8 @@
             this.LastNameLabel = new System.Windows.Forms.Label();
             this.LastNameTextBox = new System.Windows.Forms.TextBox();
             this.searchButton = new System.Windows.Forms.Button();
+            this.AddReservationButton = new System.Windows.Forms.Button();
+            this.RefreshButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ReservationFoundListBox
@@ -86,11 +88,33 @@
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
+            // AddReservationButton
+            // 
+            this.AddReservationButton.Location = new System.Drawing.Point(676, 44);
+            this.AddReservationButton.Name = "AddReservationButton";
+            this.AddReservationButton.Size = new System.Drawing.Size(111, 23);
+            this.AddReservationButton.TabIndex = 6;
+            this.AddReservationButton.Text = "Dodaj Rezerwacje";
+            this.AddReservationButton.UseVisualStyleBackColor = true;
+            this.AddReservationButton.Click += new System.EventHandler(this.AddReservationButton_Click);
+            // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Location = new System.Drawing.Point(583, 44);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(75, 23);
+            this.RefreshButton.TabIndex = 7;
+            this.RefreshButton.Text = "Odśwież";
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.RefreshButton);
+            this.Controls.Add(this.AddReservationButton);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.LastNameTextBox);
             this.Controls.Add(this.LastNameLabel);
@@ -112,6 +136,8 @@
         private System.Windows.Forms.Label LastNameLabel;
         private System.Windows.Forms.TextBox LastNameTextBox;
         private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.Button AddReservationButton;
+        private System.Windows.Forms.Button RefreshButton;
     }
 }
 

@@ -55,5 +55,20 @@ namespace RestaurantDesktop
 
             
         }
+
+        private void AddReservationButton_Click(object sender, EventArgs e)
+        {
+            var r = new NewReservation();
+            r.Show();
+
+        }
+
+        private void RefreshButton_Click(object sender, EventArgs e)
+        {
+            var db = new DataAccess();
+
+            reservations = db.GetAllReservations();
+            UpdateBinding();
+        }
     }
 }
