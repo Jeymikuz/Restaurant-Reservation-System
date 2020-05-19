@@ -149,7 +149,7 @@ BEGIN
 END
 GO
 
-EXEC Add_Reservation 1,1,"Jan","Kowalski","jan.kowalski88@gmail.com","+48671877234","2020-06-05 18:00:00",2,0;
+EXEC Add_Reservation 1,"Jan","Kowalski","jan.kowalski88@gmail.com","+48671877234","2020-06-05 18:00:00",2,0;
 GO
 
 EXEC Add_Table 1,null,2;
