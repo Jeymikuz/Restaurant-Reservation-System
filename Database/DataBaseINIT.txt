@@ -16,7 +16,7 @@ USE RestaurantDB
 GO
 
 CREATE TABLE [dbo].[Reservation](
-	[ReservationID] [int] NOT NULL PRIMARY KEY,
+	[ReservationID] [int] NOT NULL,
 	[TableID] [int] NOT NULL,
 	[FirstName] [nvarchar] (30) NOT NULL ,
 	[LastName] [nvarchar] (60) NULL ,
@@ -37,7 +37,7 @@ CREATE TABLE [dbo].[ReservationTable](
 GO
 
 CREATE TABLE [dbo].[Order](
-	[OrderID] [int] NOT NULL PRIMARY KEY,
+	[OrderID] [int] NOT NULL ,
 	[FirstName] [nvarchar] (30) NOT NULL ,
 	[LastName] [nvarchar] (60) NULL ,
 	[Email] [nvarchar] (120) NOT NULL ,
