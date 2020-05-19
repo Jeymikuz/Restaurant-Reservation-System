@@ -79,12 +79,13 @@ CREATE PROC Add_Reservation
 @ReservationLength int,
 @Accepted bit
 AS
-INSERT Reservation(,TableID, FirstName, LastName, Email, PhoneNumber,ReservationDate,ReservationLength,Accepted)
+INSERT Reservation(TableID, FirstName, LastName, Email, PhoneNumber,ReservationDate,ReservationLength,Accepted)
 VALUES (@TableID, @FirstName, @LastName, @Email, @PhoneNumber,@ReservationDate,@ReservationLength,@Accepted)
 
 UPDATE Reservation
 SET ReservationExpire= DATEADD(HOUR,@ReservationLength,@ReservationDate)
 GO
+
 
 CREATE PROCEDURE Reservation_GetAll
 AS
