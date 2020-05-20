@@ -1,14 +1,14 @@
-﻿using RestaurantDesktop.Models;
+﻿using RestaurantWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using RestaurantDesktop.Helpers;
+using RestaurantWeb.Helpers;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace RestaurantDesktop.Data
+namespace RestaurantWeb.Data
 {
     public class DataAccess
     {
