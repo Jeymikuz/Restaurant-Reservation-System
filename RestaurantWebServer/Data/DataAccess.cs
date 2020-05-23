@@ -1,16 +1,16 @@
-﻿using RestaurantWeb.Models;
+﻿using RestaurantWebServer.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using RestaurantWeb.Helpers;
+using RestaurantWebServer.Helpers;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace RestaurantWeb.Data
+namespace RestaurantWebServer.Data
 {
-    public class DataAccess
+    public class DataAccess : IDataAccess
     {
         // Zwraca liste rezerwacji sortowanych po Imieniu
 

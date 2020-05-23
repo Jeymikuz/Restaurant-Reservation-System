@@ -1,5 +1,7 @@
 ﻿@page "/reservation"
 
+@inject RestaurantWebServer.Data.IDataAccess _db
+
 <h3>NewRezervation</h3>
 
 <EditForm Model="@newReservation" OnValidSubmit="HandleValidSubmit">
@@ -61,7 +63,7 @@
             <option>4</option>
         </select>
     </div>
-    
+
 
     <button type="submit" class="btn btn-primary">Submit</button>
 
@@ -71,17 +73,21 @@
 
 @code {
 
-    RestaurantWeb.Models.Reservation newReservation = new Models.Reservation();
+    Models.Reservation newReservation = new Models.Reservation();
     List<Models.Table> tables = new List<Models.Table>();
-
     private string tempDate;
     private string tempHour;
 
     
 
+    protected override void OnInitialized()
+    {
+        tables = _db.GetAllTable();
+    }
+
     private void HandleValidSubmit()
     {
-        
+
     }
 
 
