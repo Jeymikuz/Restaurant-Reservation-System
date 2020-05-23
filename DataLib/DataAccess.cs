@@ -2,18 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using RestaurantWeb.Helpers;
+using DataLib.Helpers;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace RestaurantWeb.Data
+namespace DataLib
 {
     public class DataAccess
     {
-        // Zwraca liste rezerwacji sortowanych po Imieniu
-
         public List<Reservation> GetAllReservations()
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("RestaurantDB")))
