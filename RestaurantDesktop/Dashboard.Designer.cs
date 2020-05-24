@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ReservationFoundListBox = new System.Windows.Forms.ListBox();
             this.FirstNameLabel = new System.Windows.Forms.Label();
             this.FirstNameTextBox = new System.Windows.Forms.TextBox();
             this.LastNameLabel = new System.Windows.Forms.Label();
@@ -36,15 +35,9 @@
             this.searchButton = new System.Windows.Forms.Button();
             this.AddReservationButton = new System.Windows.Forms.Button();
             this.RefreshButton = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ReservationFoundListBox
-            // 
-            this.ReservationFoundListBox.FormattingEnabled = true;
-            this.ReservationFoundListBox.Location = new System.Drawing.Point(12, 76);
-            this.ReservationFoundListBox.Name = "ReservationFoundListBox";
-            this.ReservationFoundListBox.Size = new System.Drawing.Size(776, 225);
-            this.ReservationFoundListBox.TabIndex = 0;
             // 
             // FirstNameLabel
             // 
@@ -90,7 +83,7 @@
             // 
             // AddReservationButton
             // 
-            this.AddReservationButton.Location = new System.Drawing.Point(676, 44);
+            this.AddReservationButton.Location = new System.Drawing.Point(936, 44);
             this.AddReservationButton.Name = "AddReservationButton";
             this.AddReservationButton.Size = new System.Drawing.Size(111, 23);
             this.AddReservationButton.TabIndex = 6;
@@ -100,7 +93,7 @@
             // 
             // RefreshButton
             // 
-            this.RefreshButton.Location = new System.Drawing.Point(583, 44);
+            this.RefreshButton.Location = new System.Drawing.Point(855, 44);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(75, 23);
             this.RefreshButton.TabIndex = 7;
@@ -108,11 +101,20 @@
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 70);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(1035, 240);
+            this.dataGridView1.TabIndex = 8;
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1059, 450);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.AddReservationButton);
             this.Controls.Add(this.searchButton);
@@ -120,17 +122,15 @@
             this.Controls.Add(this.LastNameLabel);
             this.Controls.Add(this.FirstNameTextBox);
             this.Controls.Add(this.FirstNameLabel);
-            this.Controls.Add(this.ReservationFoundListBox);
             this.Name = "Dashboard";
             this.Text = "Restaurant Dashboard";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox ReservationFoundListBox;
         private System.Windows.Forms.Label FirstNameLabel;
         private System.Windows.Forms.TextBox FirstNameTextBox;
         private System.Windows.Forms.Label LastNameLabel;
@@ -138,6 +138,7 @@
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.Button AddReservationButton;
         private System.Windows.Forms.Button RefreshButton;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 

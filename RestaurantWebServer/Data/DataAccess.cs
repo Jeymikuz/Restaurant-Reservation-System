@@ -80,12 +80,12 @@ namespace RestaurantWebServer.Data
             }
         }
 
-        internal void InsterResevation(int tablesID, string firstname, string lastname, string email, string phonenumber, DateTime reservationDate, int length)
+        public void InsterResevation(int tablesID, string firstname, string lastname, string email, string phonenumber, DateTime reservationDate, int length)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("RestaurantDB")))
             {
                 var reservations = new List<Reservation>();
-                reservations.Add(new Reservation { TableID = tablesID, FirstName = firstname, LastName = lastname, Email = email, PhoneNumber = phonenumber, ReservationDate = reservationDate, ReservationLength = length, Accepted = true });
+                reservations.Add(new Reservation { TableID = tablesID, FirstName = firstname, LastName = lastname, Email = email, PhoneNumber = phonenumber, ReservationDate = reservationDate, ReservationLength = length, Accepted = false });
 
                 connection.Execute("dbo.Add_Reservation @TableID, @FirstName, @LastName, @Email, @PhoneNumber, @ReservationDate, @ReservationLength, @Accepted", reservations);
             }

@@ -25,8 +25,10 @@ namespace RestaurantDesktop
 
         private void UpdateBinding()
         {
-            ReservationFoundListBox.DataSource = reservations;
-            ReservationFoundListBox.DisplayMember = "FullInfo";
+            //ReservationFoundListBox.DataSource = reservations;
+            //ReservationFoundListBox.DisplayMember = "FullInfo";
+
+            dataGridView1.DataSource = reservations;
         }
 
         private void searchButton_Click(object sender, EventArgs e)

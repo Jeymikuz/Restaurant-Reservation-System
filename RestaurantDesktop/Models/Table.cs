@@ -12,9 +12,11 @@ namespace RestaurantDesktop.Models
         public int ReservationID { get; set; }
         public int NumberOfChairs { get; set; }
 
+        /*
         public string CharsAndID
         {
             get => $"Number stolika: {TableID.ToString()}, Ilosc miejsc: {NumberOfChairs.ToString()}";
         }
+        */
     }
 }

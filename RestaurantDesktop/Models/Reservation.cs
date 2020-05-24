@@ -19,9 +19,11 @@ namespace RestaurantDesktop.Models
         public int ReservationLength { get; set; }
         public bool Accepted { get; set; }
 
+        /*
         public string FullInfo
         {
             get => $"{ReservationID.ToString()} {TableID.ToString()} {FirstName} {LastName} {Email} {PhoneNumber} {ReservationDate.ToString("u")} {ReservationExpire.ToString("u")} {ReservationLength.ToString()} {Accepted.ToString()}";
         }
+        */
     }
 }
