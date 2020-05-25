@@ -1,5 +1,5 @@
 ﻿@page "/reservation"
-
+@using MatBlazor
 @inject RestaurantWebServer.Data.IDataAccess _db
 
 <h3>NewRezervation</h3>
@@ -40,7 +40,7 @@
     </div>
     <div class="form-group">
         <label for="exampleFormControlSelect1">Data rezerwacji</label>
-        <select class="form-control" @onchange="InitHourComboBox">
+        <select class="form-control" @onchange="InitHourComboBox" value="@tempDate">
             @foreach (var day in days)
             {
                 <option value="@day">@day.ToString("d/M/yyyy")</option>
@@ -68,17 +68,37 @@
         </InputSelect>
     </div>
 
+    <MatButton Type="submit" class="btn btn-primary" OnClick="@OpenDialog" Raised="true">Zarezerwuj</MatButton>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
 
 
 </EditForm>
 
+<MatDialog @bind-IsOpen="@dialogIsOpen">
+    <MatDialogTitle>Proszę chwile zaczekać</MatDialogTitle>
+    <MatDialogContent>
+        <p>Zaraz dostaniesz potwierdzenie o akcpetacji</p>
+        <div class="loader"></div>
+    </MatDialogContent>
+</MatDialog>
+
+<MatDialog @bind-IsOpen="@dialogIsOpen2">
+    <MatDialogContent>
+        <p>Pomyślnie przyjęto rezerwacje</p>        
+    </MatDialogContent>
+    <MatDialogActions>
+        <MatButton OnClick="@OkClick">OK</MatButton>
+    </MatDialogActions>
+</MatDialog>
 
 @code {
 
+    //TODO: Przy wybieraniu stolika odswiezanie dat i godzin
+
     Models.Reservation newReservation = new Models.Reservation();
+
     List<Models.Table> tables = new List<Models.Table>();
+    List<Models.Reservation> reservations = new List<Models.Reservation>();
 
     List<DateTime> days = new List<DateTime>();
     List<DateTime> hours = new List<DateTime>();
@@ -87,14 +107,13 @@
     private string tempDate = DateTime.Now.ToString(@"d/M/yyyy");
     private string tempHour;
     private string tempLength;
-
     private string tempTableID;
 
-
-
+    private DateTime tempReservedTime;
 
     protected override void OnInitialized()
     {
+        tempTableID = "1";
         tempLength = "1";
         InitDayInputSelect();
     }
@@ -105,11 +124,17 @@
         {
             return _db.GetAllTable();
         });
+        reservations = await Task<Models.Reservation>.Run(() =>
+        {
+            var r = _db.GetAllReservations();
+
+            return r.Where(r => r.ReservationDate >= DateTime.Now).ToList();
+        });
     }
 
     private void InitDayInputSelect()
     {
-
+        days.Clear();
         for (double i = 0; i <= 7; i++)
         {
             var day = DateTime.Now;
@@ -126,12 +151,13 @@
 
     private void InitHourComboBox(ChangeEventArgs e)
     {
+        bool isTaken = false;
         tempDate = e.Value.ToString();
         hours.Clear();
         var dayMothYear = tempDate.Split(".");
         var temporaryDateHours = dayMothYear[2].Split(" ");
         var temporaryHours = temporaryDateHours[1].Split(":");
-        var selectedDate = new DateTime(DateTime.Now.Year, int.Parse(dayMothYear[1]), int.Parse(dayMothYear[0]),int.Parse(temporaryHours[0]), int.Parse(temporaryHours[1]), int.Parse(temporaryHours[2]));
+        var selectedDate = new DateTime(DateTime.Now.Year, int.Parse(dayMothYear[1]), int.Parse(dayMothYear[0]), int.Parse(temporaryHours[0]), int.Parse(temporaryHours[1]), int.Parse(temporaryHours[2]));
 
         var helperValue = selectedDate;
         var checkValue = new DateTime(helperValue.Year, helperValue.Month, helperValue.Day, 12, 0, 0);
@@ -139,27 +165,51 @@
 
         if (helperValue > checkValue)
         {
-            var hour = RoundUp(selectedDate, TimeSpan.FromHours(1)); // 14:00:00               
+            var hour = RoundUp(selectedDate, TimeSpan.FromHours(1)); // 14:00:00
             while (hour <= DateTime.Today.AddHours(20)) // 16:00:00
             {
-                hours.Add(hour);
+                foreach (var r in reservations)
+                {
+                    if (hour == r.ReservationDate && r.TableID == int.Parse(tempTableID))
+                    {
+                        isTaken = true;
+                    }
+                }
+                if (isTaken == false)
+                {
+                    hours.Add(hour);
+                }
                 hour = hour.AddMinutes(30);
+                isTaken = false;
             }
         }
         else
         {
             var today = DateTime.Now;
-            var hour = RoundUp(new DateTime(today.Year, today.Month, today.Day, 12, 0, 0), TimeSpan.FromHours(1)); // 14:00:00                
+            var hour = RoundUp(new DateTime(today.Year, today.Month, today.Day, 12, 0, 0), TimeSpan.FromHours(1)); // 14:00:00
             while (hour <= DateTime.Today.AddHours(20)) // 16:00:00
             {
-                hours.Add(hour);
+                foreach (var r in reservations)
+                {
+                    if (hour == r.ReservationDate && r.TableID == int.Parse(tempTableID))
+                    {
+                        isTaken = true;
+                    }
+                }
+                if (isTaken == false)
+                {
+                    hours.Add(hour);
+                }
                 hour = hour.AddMinutes(30);
+                isTaken = false;
+
             }
         }
+        tempHour = hours[0].ToString();
     }
 
 
-    private void HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
         newReservation.TableID = int.Parse(tempTableID);
 
@@ -167,11 +217,13 @@
         var tempResrvationHour = tempHour.Split(":");
         var tempHelperHour = tempResrvationHour[0].Split(" ");
 
-        var ReservationTime = new DateTime(DateTime.Now.Year,int.Parse(tempReservationDate[1]),int.Parse(tempReservationDate[0]),int.Parse(tempHelperHour[1]),int.Parse(tempResrvationHour[1]),0);
+        var ReservationTime = new DateTime(DateTime.Now.Year, int.Parse(tempReservationDate[1]), int.Parse(tempReservationDate[0]), int.Parse(tempHelperHour[1]), int.Parse(tempResrvationHour[1]), 0);
 
         _db.InsterResevation(int.Parse(tempTableID), newReservation.FirstName, newReservation.LastName, newReservation.Email, newReservation.PhoneNumber, ReservationTime, int.Parse(tempLength));
+        dialogIsOpen = true;
 
-
+        tempReservedTime = ReservationTime;
+        await GetAccept();
     }
 
     DateTime RoundUp(DateTime dt, TimeSpan d)
@@ -179,9 +231,40 @@
         return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
     }
 
-    private void OnButtonClicked()
+    public async Task GetAccept()
+    {
+        await Task.Run(() =>
+        {
+            var isAccpeted = false;
+            while (isAccpeted == false)
+            {
+                var tempDb = _db.GetAllReservations();
+                var r = tempDb.Where(p => p.FirstName == newReservation.FirstName && p.LastName == newReservation.LastName && p.Email == newReservation.Email && p.ReservationDate == tempReservedTime).ToList();
+                if (r[0].Accepted == true)
+                {
+                    isAccpeted = true;                    
+                }
+                System.Threading.Thread.Sleep(5000);
+            }
+            dialogIsOpen = false;
+            dialogIsOpen2 = true;
+        });
+    }
+
+    bool dialogIsOpen = false;
+    bool dialogIsOpen2 = false;
+
+    void OpenDialog()
     {
 
+
+
+    }
+
+    void OkClick()
+    {
+
+        dialogIsOpen2 = false;
     }
 
 

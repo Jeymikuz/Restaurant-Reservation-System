@@ -120,11 +120,22 @@ INSERT ReservationTable(ReservationID,NumberOfChairs)
 VALUES (@ReservationID,@NumberOfChairs)
 GO
 
+
 CREATE PROCEDURE GetAllTables
 AS
 BEGIN
 	SELECT *
 	FROM ReservationTable
+END
+GO
+
+CREATE PROC UpdateReservation
+@id int
+AS
+BEGIN
+UPDATE dbo.Reservation
+SET Accepted = 1
+WHERE Reservation.ReservationID = @id
 END
 GO
 
@@ -137,4 +148,3 @@ EXEC Add_Table null,4;
 EXEC Add_Table null,4;
 EXEC Add_Table null,6;
 EXEC Add_Table null,8;
-

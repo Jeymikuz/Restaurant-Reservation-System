@@ -90,6 +90,16 @@ namespace RestaurantDesktop.Data
                 connection.Execute("dbo.Add_Reservation @TableID, @FirstName, @LastName, @Email, @PhoneNumber, @ReservationDate, @ReservationLength, @Accepted", reservations);
             }
         }
+
+        internal void ResevationAccepted(int Id)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("RestaurantDB")))
+            {
+                var reservations = new List<Reservation>();
+
+                connection.Execute("exec dbo.UpdateReservation @id", new { id = Id });
+            }
+        }
     }
 }
 

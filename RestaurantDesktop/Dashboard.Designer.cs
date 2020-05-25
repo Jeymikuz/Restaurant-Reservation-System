@@ -36,6 +36,7 @@
             this.AddReservationButton = new System.Windows.Forms.Button();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.acceptBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,11 +110,22 @@
             this.dataGridView1.Size = new System.Drawing.Size(1035, 240);
             this.dataGridView1.TabIndex = 8;
             // 
+            // acceptBtn
+            // 
+            this.acceptBtn.Location = new System.Drawing.Point(972, 319);
+            this.acceptBtn.Name = "acceptBtn";
+            this.acceptBtn.Size = new System.Drawing.Size(75, 23);
+            this.acceptBtn.TabIndex = 9;
+            this.acceptBtn.Text = "Akcpetuj";
+            this.acceptBtn.UseVisualStyleBackColor = true;
+            this.acceptBtn.Click += new System.EventHandler(this.acceptBtn_OnClick);
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1059, 450);
+            this.Controls.Add(this.acceptBtn);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.AddReservationButton);
@@ -122,6 +134,7 @@
             this.Controls.Add(this.LastNameLabel);
             this.Controls.Add(this.FirstNameTextBox);
             this.Controls.Add(this.FirstNameLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Dashboard";
             this.Text = "Restaurant Dashboard";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -139,6 +152,7 @@
         private System.Windows.Forms.Button AddReservationButton;
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button acceptBtn;
     }
 }
 
