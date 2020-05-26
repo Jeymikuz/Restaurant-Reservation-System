@@ -113,11 +113,10 @@ GO
 
 
 CREATE PROC Add_Table
-@ReservationID int,
 @NumberOfChairs int
 AS
-INSERT ReservationTable(ReservationID,NumberOfChairs)
-VALUES (@ReservationID,@NumberOfChairs)
+INSERT ReservationTable(NumberOfChairs)
+VALUES (@NumberOfChairs)
 GO
 
 

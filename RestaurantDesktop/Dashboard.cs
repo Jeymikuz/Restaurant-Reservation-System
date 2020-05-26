@@ -44,6 +44,11 @@ namespace RestaurantDesktop
                 {
                     row.DefaultCellStyle.BackColor = Color.LightYellow;
                 }
+
+                if((DateTime)row.Cells["ReservationExpire"].Value < DateTime.Now)
+                {
+                    row.DefaultCellStyle.BackColor = Color.LightGray;
+                }
             }
         }
 
@@ -117,6 +122,12 @@ namespace RestaurantDesktop
             {
                 MessageBox.Show("Error");
             }
+        }
+
+        private void NewTableBtn_OnClick(object sender, EventArgs e)
+        {
+            var t = new NewTable();
+            t.Show();
         }
     }
 }

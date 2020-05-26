@@ -100,6 +100,16 @@ namespace RestaurantDesktop.Data
                 connection.Execute("exec dbo.UpdateReservation @id", new { id = Id });
             }
         }
+
+        internal void AddNewTable(int NumberOfChairs)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("RestaurantDB")))
+            {
+                var reservations = new List<Reservation>();
+
+                connection.Execute("exec dbo.Add_Table @NumberOfChairs", new { NumberOfChairs = NumberOfChairs });
+            }
+        }
     }
 }
 

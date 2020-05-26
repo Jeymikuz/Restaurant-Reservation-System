@@ -37,6 +37,7 @@
             this.RefreshButton = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.acceptBtn = new System.Windows.Forms.Button();
+            this.NewTableBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,7 +85,7 @@
             // 
             // AddReservationButton
             // 
-            this.AddReservationButton.Location = new System.Drawing.Point(936, 44);
+            this.AddReservationButton.Location = new System.Drawing.Point(855, 316);
             this.AddReservationButton.Name = "AddReservationButton";
             this.AddReservationButton.Size = new System.Drawing.Size(111, 23);
             this.AddReservationButton.TabIndex = 6;
@@ -94,7 +95,7 @@
             // 
             // RefreshButton
             // 
-            this.RefreshButton.Location = new System.Drawing.Point(855, 44);
+            this.RefreshButton.Location = new System.Drawing.Point(972, 41);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(75, 23);
             this.RefreshButton.TabIndex = 7;
@@ -104,15 +105,18 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 70);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(1035, 240);
             this.dataGridView1.TabIndex = 8;
             // 
             // acceptBtn
             // 
-            this.acceptBtn.Location = new System.Drawing.Point(972, 319);
+            this.acceptBtn.Location = new System.Drawing.Point(972, 316);
             this.acceptBtn.Name = "acceptBtn";
             this.acceptBtn.Size = new System.Drawing.Size(75, 23);
             this.acceptBtn.TabIndex = 9;
@@ -120,11 +124,22 @@
             this.acceptBtn.UseVisualStyleBackColor = true;
             this.acceptBtn.Click += new System.EventHandler(this.acceptBtn_OnClick);
             // 
+            // NewTableBtn
+            // 
+            this.NewTableBtn.Location = new System.Drawing.Point(936, 389);
+            this.NewTableBtn.Name = "NewTableBtn";
+            this.NewTableBtn.Size = new System.Drawing.Size(111, 23);
+            this.NewTableBtn.TabIndex = 10;
+            this.NewTableBtn.Text = "Dodaj Stolik";
+            this.NewTableBtn.UseVisualStyleBackColor = true;
+            this.NewTableBtn.Click += new System.EventHandler(this.NewTableBtn_OnClick);
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1059, 450);
+            this.Controls.Add(this.NewTableBtn);
             this.Controls.Add(this.acceptBtn);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.RefreshButton);
@@ -153,6 +168,7 @@
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button acceptBtn;
+        private System.Windows.Forms.Button NewTableBtn;
     }
 }
 

@@ -2,7 +2,7 @@
 @using MatBlazor
 @inject RestaurantWebServer.Data.IDataAccess _db
 
-<h3>NewRezervation</h3>
+<h3>Rezerwacja</h3>
 
 <EditForm Model="@newReservation" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -10,11 +10,11 @@
 
 
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Stolik: </label>
+        <label for="exampleFormControlSelect1">Stolik</label>
         <InputSelect class="form-control" @bind-Value="tempTableID">
             @foreach (var table in tables)
             {
-                <option value="@table.TableID">Stolik nr @table.TableID, Liczba miejsc: @table.NumberOfChairs</option>
+                <option value="@table.TableID">Stolik nr @table.TableID - Liczba miejsc: @table.NumberOfChairs</option>
             }
         </InputSelect>
     </div>
@@ -93,15 +93,15 @@
 
 @code {
 
-    //TODO: Przy wybieraniu stolika odswiezanie dat i godzin
+        //TODO: Przy wybieraniu stolika odswiezanie dat i godzin
 
-    Models.Reservation newReservation = new Models.Reservation();
+        Models.Reservation newReservation = new Models.Reservation();
 
-    List<Models.Table> tables = new List<Models.Table>();
-    List<Models.Reservation> reservations = new List<Models.Reservation>();
+        List<Models.Table> tables = new List<Models.Table>();
+        List<Models.Reservation> reservations = new List<Models.Reservation>();
 
-    List<DateTime> days = new List<DateTime>();
-    List<DateTime> hours = new List<DateTime>();
+        List<DateTime> days = new List<DateTime>();
+        List<DateTime> hours = new List<DateTime>();
 
 
     private string tempDate = DateTime.Now.ToString(@"d/M/yyyy");
@@ -170,7 +170,7 @@
             {
                 foreach (var r in reservations)
                 {
-                    if (hour == r.ReservationDate && r.TableID == int.Parse(tempTableID))
+                    if (hour.TimeOfDay == r.ReservationDate.TimeOfDay && r.TableID == int.Parse(tempTableID))
                     {
                         isTaken = true;
                     }
@@ -191,7 +191,7 @@
             {
                 foreach (var r in reservations)
                 {
-                    if (hour == r.ReservationDate && r.TableID == int.Parse(tempTableID))
+                    if (hour.TimeOfDay == r.ReservationDate.TimeOfDay && r.TableID == int.Parse(tempTableID))
                     {
                         isTaken = true;
                     }
@@ -205,7 +205,11 @@
 
             }
         }
-        tempHour = hours[0].ToString();
+        if (hours.Count != 0)
+        {
+            tempHour = hours[0].ToString();
+        }
+        
     }
 
 
@@ -242,7 +246,7 @@
                 var r = tempDb.Where(p => p.FirstName == newReservation.FirstName && p.LastName == newReservation.LastName && p.Email == newReservation.Email && p.ReservationDate == tempReservedTime).ToList();
                 if (r[0].Accepted == true)
                 {
-                    isAccpeted = true;                    
+                    isAccpeted = true;
                 }
                 System.Threading.Thread.Sleep(5000);
             }
