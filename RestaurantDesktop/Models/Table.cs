@@ -9,7 +9,6 @@ namespace RestaurantDesktop.Models
     public class Table
     {
         public int TableID { get; set; }
-        public int ReservationID { get; set; }
         public int NumberOfChairs { get; set; }
 
         /*

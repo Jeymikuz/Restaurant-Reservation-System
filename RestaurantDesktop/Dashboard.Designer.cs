@@ -37,7 +37,7 @@
             this.RefreshButton = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.acceptBtn = new System.Windows.Forms.Button();
-            this.NewTableBtn = new System.Windows.Forms.Button();
+            this.EditTableBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,22 +124,22 @@
             this.acceptBtn.UseVisualStyleBackColor = true;
             this.acceptBtn.Click += new System.EventHandler(this.acceptBtn_OnClick);
             // 
-            // NewTableBtn
+            // EditTableBtn
             // 
-            this.NewTableBtn.Location = new System.Drawing.Point(936, 389);
-            this.NewTableBtn.Name = "NewTableBtn";
-            this.NewTableBtn.Size = new System.Drawing.Size(111, 23);
-            this.NewTableBtn.TabIndex = 10;
-            this.NewTableBtn.Text = "Dodaj Stolik";
-            this.NewTableBtn.UseVisualStyleBackColor = true;
-            this.NewTableBtn.Click += new System.EventHandler(this.NewTableBtn_OnClick);
+            this.EditTableBtn.Location = new System.Drawing.Point(936, 389);
+            this.EditTableBtn.Name = "EditTableBtn";
+            this.EditTableBtn.Size = new System.Drawing.Size(111, 23);
+            this.EditTableBtn.TabIndex = 10;
+            this.EditTableBtn.Text = "Edytuj Stoliki";
+            this.EditTableBtn.UseVisualStyleBackColor = true;
+            this.EditTableBtn.Click += new System.EventHandler(this.NewTableBtn_OnClick);
             // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1059, 450);
-            this.Controls.Add(this.NewTableBtn);
+            this.Controls.Add(this.EditTableBtn);
             this.Controls.Add(this.acceptBtn);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.RefreshButton);
@@ -168,7 +168,7 @@
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button acceptBtn;
-        private System.Windows.Forms.Button NewTableBtn;
+        private System.Windows.Forms.Button EditTableBtn;
     }
 }
 

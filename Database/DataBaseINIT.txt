@@ -31,8 +31,7 @@ GO
 
 CREATE TABLE [dbo].[ReservationTable](
 	[TableID] [int] NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	[ReservationID] [int] NULL ,
-	[NumberOfChairs] [int] NULL,
+	[NumberOfChairs] [int] NULL
 ) ON [PRIMARY]
 GO
 
@@ -135,6 +134,26 @@ BEGIN
 UPDATE dbo.Reservation
 SET Accepted = 1
 WHERE Reservation.ReservationID = @id
+END
+GO
+
+CREATE PROC UpdateTables
+@ID int,
+@NumberOfCharis int
+AS
+BEGIN
+UPDATE ReservationTable
+SET NumberOfChairs = @NumberOfCharis
+WHERE TableID = @ID
+END
+GO
+
+CREATE PROC DeleteTable
+@ID int
+AS
+BEGIN 
+DELETE FROM ReservationTable
+WHERE TableID = @ID;
 END
 GO
 

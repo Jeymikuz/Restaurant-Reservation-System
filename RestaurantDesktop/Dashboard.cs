@@ -107,12 +107,19 @@ namespace RestaurantDesktop
                 {
                     DataGridViewRow row = this.dataGridView1.SelectedRows[0];
                     var test = row.Cells["ReservationID"].Value;
-                    db.ResevationAccepted((int)test);
-                    
-                    MessageBox.Show("Poprawnie akceptowano");
-                    reservations = db.GetAllReservations();
-                    //reservations = reservations.OrderByDescending(p => p.ReservationID).ToList();
-                    UpdateBinding();
+                    if (reservations[(int)test - 1].Accepted == false)
+                    {
+                        db.ResevationAccepted((int)test);
+
+                        MessageBox.Show("Poprawnie akceptowano");
+                        reservations = db.GetAllReservations();
+                        //reservations = reservations.OrderByDescending(p => p.ReservationID).ToList();
+                        UpdateBinding();
+                    }
+                    else {
+                        MessageBox.Show("Rezerwacja jest juz zaakceptowana");
+                    }
+
                 }
                 else MessageBox.Show("Nie wybrano żadnego klienta");
 
