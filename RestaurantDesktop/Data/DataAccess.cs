@@ -116,7 +116,15 @@ namespace RestaurantDesktop.Data
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("RestaurantDB")))
             {
-                connection.Execute("exec dbo.DeleteTable @ID", new { ID = TableID,});
+                connection.Execute("exec dbo.DeleteTable @ID", new { ID = TableID});
+            }
+        }
+
+        internal void CancelReservation(int ReservationID)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("RestaurantDB")))
+            {
+                connection.Execute("exec dbo.CancelReservation @ID", new { ID = ReservationID });
             }
         }
     }

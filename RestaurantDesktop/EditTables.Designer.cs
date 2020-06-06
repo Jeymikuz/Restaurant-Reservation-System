@@ -1,6 +1,6 @@
 ﻿namespace RestaurantDesktop
 {
-    partial class NewTable
+    partial class EditTables
     {
         /// <summary>
         /// Required designer variable.

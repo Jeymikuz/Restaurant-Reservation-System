@@ -1,6 +1,7 @@
 ﻿@page "/reservation"
 @using MatBlazor
 @inject RestaurantWebServer.Data.IDataAccess _db
+@inject NavigationManager NavigationManager
 
 <h3>Rezerwacja</h3>
 
@@ -93,15 +94,15 @@
 
 @code {
 
-        //TODO: Przy wybieraniu stolika odswiezanie dat i godzin
+    //TODO: Przy wybieraniu stolika odswiezanie dat i godzin
 
-        Models.Reservation newReservation = new Models.Reservation();
+    Models.Reservation newReservation = new Models.Reservation();
 
-        List<Models.Table> tables = new List<Models.Table>();
-        List<Models.Reservation> reservations = new List<Models.Reservation>();
+    List<Models.Table> tables = new List<Models.Table>();
+    List<Models.Reservation> reservations = new List<Models.Reservation>();
 
-        List<DateTime> days = new List<DateTime>();
-        List<DateTime> hours = new List<DateTime>();
+    List<DateTime> days = new List<DateTime>();
+    List<DateTime> hours = new List<DateTime>();
 
 
     private string tempDate = DateTime.Now.ToString(@"d/M/yyyy");
@@ -128,7 +129,7 @@
         {
             var r = _db.GetAllReservations();
 
-            return r.Where(r => r.ReservationDate >= DateTime.Now).ToList();
+            return r.Where(r => r.ReservationDate >= DateTime.Now && r.Accepted==true).ToList();
         });
     }
 
@@ -209,7 +210,7 @@
         {
             tempHour = hours[0].ToString();
         }
-        
+
     }
 
 
@@ -269,6 +270,7 @@
     {
 
         dialogIsOpen2 = false;
+        NavigationManager.NavigateTo("/");
     }
 
 

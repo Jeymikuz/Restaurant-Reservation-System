@@ -11,15 +11,27 @@ using System.Windows.Forms;
 
 namespace RestaurantDesktop
 {
-    public partial class NewTable : Form
+    public partial class EditTables : Form
     {
         public List<Models.Table> tables = new List<Models.Table>();
 
-        public NewTable()
+        public EditTables()
         {
             InitializeComponent();
             InitTables();
             UpdateBinding();
+            InitColumns();
+        }
+
+        private void InitColumns()
+        {
+            for (int i = 0; i < TableDataGridView.Columns.Count; i++)
+            {
+                TableDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+            TableDataGridView.Columns[0].HeaderText = "Numer Stolika";
+            TableDataGridView.Columns[1].HeaderText = "Liczba krzeseł";
+
         }
 
         private void AddBtn_OnClick(object sender, EventArgs e)
@@ -79,14 +91,11 @@ namespace RestaurantDesktop
 
                 }
                 else MessageBox.Show("Nie wybrano żadnego stolika");
-
-
             }
             catch
             {
                 MessageBox.Show("Error");
                 UpdateBinding();
-
             }
         }
 
@@ -102,5 +111,7 @@ namespace RestaurantDesktop
         {
             UpdateBinding();
         }
+
+
     }
 }

@@ -18,6 +18,8 @@ namespace RestaurantDesktop.Models
         public DateTime ReservationExpire { get; set; }
         public int ReservationLength { get; set; }
         public bool Accepted { get; set; }
+        public bool Canceled { get; set; }
+
 
         /*
         public string FullInfo

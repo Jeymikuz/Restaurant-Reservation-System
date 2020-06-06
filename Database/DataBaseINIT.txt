@@ -25,7 +25,9 @@ CREATE TABLE [dbo].[Reservation](
 	[ReservationDate] [datetime] NOT NULL,
 	[ReservationExpire] [datetime] NULL,
 	[ReservationLength] [int] NOT NULL,
-    [Accepted] [bit] NOT NULL
+    [Accepted] [bit] NOT NULL,
+    [Canceled] [bit] NOT NULL
+
 ) ON [PRIMARY]
 GO
 
@@ -58,8 +60,8 @@ CREATE PROC Add_Reservation
 @ReservationLength int,
 @Accepted bit
 AS
-INSERT Reservation(TableID, FirstName, LastName, Email, PhoneNumber,ReservationDate,ReservationLength,Accepted)
-VALUES (@TableID, @FirstName, @LastName, @Email, @PhoneNumber,@ReservationDate,@ReservationLength,@Accepted)
+INSERT Reservation(TableID, FirstName, LastName, Email, PhoneNumber,ReservationDate,ReservationLength,Accepted,Canceled)
+VALUES (@TableID, @FirstName, @LastName, @Email, @PhoneNumber,@ReservationDate,@ReservationLength,@Accepted,0)
 
 UPDATE Reservation
 SET ReservationExpire= DATEADD(HOUR,@ReservationLength,@ReservationDate)
@@ -132,7 +134,7 @@ CREATE PROC UpdateReservation
 AS
 BEGIN
 UPDATE dbo.Reservation
-SET Accepted = 1
+SET Accepted = 1, Canceled=0
 WHERE Reservation.ReservationID = @id
 END
 GO
@@ -154,6 +156,16 @@ AS
 BEGIN 
 DELETE FROM ReservationTable
 WHERE TableID = @ID;
+END
+GO
+
+CREATE PROC CancelReservation
+@ID int
+AS
+BEGIN 
+UPDATE Reservation
+SET Canceled = 1,Accepted=0
+WHERE ReservationID=@ID;
 END
 GO
 
