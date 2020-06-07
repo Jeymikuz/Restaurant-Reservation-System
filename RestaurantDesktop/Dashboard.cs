@@ -19,9 +19,6 @@ namespace RestaurantDesktop
 
         public Dashboard()
         {
-            var db = new DataAccess();
-            //reservations = db.GetAllReservations();
-            //reservations = reservations.OrderByDescending(p => p.ReservationID).ToList();
             InitializeComponent();
             UpdateBinding();
             InitColumns();

@@ -1,4 +1,5 @@
 ﻿using RestaurantDesktop.Data;
+using RestaurantDesktop.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,7 @@ namespace RestaurantDesktop
         List<DateTime> days = new List<DateTime>();
         List<DateTime> hours = new List<DateTime>();
         List<DateTime> length = new List<DateTime>();
+        List<Reservation> reservations = new List<Reservation>();
 
         public NewReservation()
         {
@@ -23,7 +25,14 @@ namespace RestaurantDesktop
             InitTableComboBox();
             InitDayComboBox();
             InitLengthComboBox();
-            
+            reservations = GetAllReservations();    
+        }
+
+        private List<Reservation> GetAllReservations()
+        {
+            var db = new DataAccess();
+            var rs = db.GetAllReservations();
+            return rs.Where(r => r.ReservationDate >= new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day) && r.Accepted == true).ToList();
         }
 
         private void InitLengthComboBox()
@@ -44,6 +53,7 @@ namespace RestaurantDesktop
         {
             HourComboBox.Items.Clear();
             hours.Clear();
+            bool isTaken = false;
             
             var helperValue = days[ReservationDayComboBox.SelectedIndex];
             var checkValue = new DateTime(helperValue.Year, helperValue.Month, helperValue.Day, 12, 0,0);
@@ -54,9 +64,23 @@ namespace RestaurantDesktop
                 var hour = RoundUp(days[ReservationDayComboBox.SelectedIndex], TimeSpan.FromHours(1)); // 14:00:00               
                 while (hour <= DateTime.Today.AddHours(20)) // 16:00:00
                 {
-                    HourComboBox.Items.Add(hour.TimeOfDay.ToString(@"hh\:mm"));
-                    hours.Add(hour);
-                    hour = hour.AddMinutes(30);
+                    foreach (var r in reservations)
+                    {
+                        for (int i = 0; i < r.ReservationLength; i++)
+                        {
+                            if(hour.TimeOfDay == (r.ReservationDate.TimeOfDay + new TimeSpan(i,0,0)) && r.TableID == (int)ChearsComboBox.SelectedValue)
+                            {
+                                isTaken = true;
+                            }
+                        }
+                    }
+                    if (isTaken == false)
+                    {
+                        HourComboBox.Items.Add(hour.TimeOfDay.ToString(@"hh\:mm"));
+                        hours.Add(hour);
+                    }
+                    isTaken = false;
+                    hour = hour.AddMinutes(60);
                 }
             }
             else
@@ -65,16 +89,29 @@ namespace RestaurantDesktop
                 var hour = RoundUp(new DateTime(today.Year,today.Month,today.Day,12,0,0), TimeSpan.FromHours(1)); // 14:00:00                
                 while (hour <= DateTime.Today.AddHours(20)) // 16:00:00
                 {
-                    HourComboBox.Items.Add(hour.TimeOfDay.ToString(@"hh\:mm"));
-                    hours.Add(hour);
-                    hour = hour.AddMinutes(30);
+                    foreach (var r in reservations)
+                    {
+                        for (int i = 0; i < r.ReservationLength; i++)
+                        {
+                            if (hour.TimeOfDay == (r.ReservationDate.TimeOfDay + new TimeSpan(i, 0, 0)) && r.TableID == (int)ChearsComboBox.SelectedValue)
+                            {
+                                isTaken = true;
+                            }
+                        }
+                    }
+                    if (isTaken == false)
+                    {
+                        HourComboBox.Items.Add(hour.TimeOfDay.ToString(@"hh\:mm"));
+                        hours.Add(hour);
+                    }
+                    hour = hour.AddMinutes(60);
+                    isTaken = false;
                 }
             }
         }
 
         private void InitDayComboBox()
         {
-            
             for (double i = 0; i <= 7; i++)
             {
                 var day = DateTime.Now;
@@ -87,7 +124,6 @@ namespace RestaurantDesktop
                     days.Add(day);
                 }
             }
-
             ReservationDayComboBox.DataSource = days;
         }
 

@@ -128,8 +128,7 @@
         reservations = await Task<Models.Reservation>.Run(() =>
         {
             var r = _db.GetAllReservations();
-
-            return r.Where(r => r.ReservationDate >= DateTime.Now && r.Accepted==true).ToList();
+            return r.Where(r => r.ReservationDate >= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day) && r.Accepted == true).ToList();
         });
     }
 
@@ -171,16 +170,21 @@
             {
                 foreach (var r in reservations)
                 {
-                    if (hour.TimeOfDay == r.ReservationDate.TimeOfDay && r.TableID == int.Parse(tempTableID))
+                    for (int i = 0; i < r.ReservationLength; i++)
                     {
-                        isTaken = true;
+
+
+                        if (hour.TimeOfDay == (r.ReservationDate.TimeOfDay + new TimeSpan(i, 0, 0)) && r.TableID == int.Parse(tempTableID))
+                        {
+                            isTaken = true;
+                        }
                     }
                 }
                 if (isTaken == false)
                 {
                     hours.Add(hour);
                 }
-                hour = hour.AddMinutes(30);
+                hour = hour.AddMinutes(60);
                 isTaken = false;
             }
         }
@@ -192,16 +196,19 @@
             {
                 foreach (var r in reservations)
                 {
-                    if (hour.TimeOfDay == r.ReservationDate.TimeOfDay && r.TableID == int.Parse(tempTableID))
+                    for (int i = 0; i < r.ReservationLength; i++)
                     {
-                        isTaken = true;
+                        if (hour.TimeOfDay == (r.ReservationDate.TimeOfDay + new TimeSpan(i,0,0)) && r.TableID == int.Parse(tempTableID))
+                        {
+                            isTaken = true;
+                        }
                     }
                 }
                 if (isTaken == false)
                 {
                     hours.Add(hour);
                 }
-                hour = hour.AddMinutes(30);
+                hour = hour.AddMinutes(60);
                 isTaken = false;
 
             }
