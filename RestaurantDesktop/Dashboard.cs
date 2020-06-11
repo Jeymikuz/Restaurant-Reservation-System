@@ -54,8 +54,7 @@ namespace RestaurantDesktop
         {
             //ReservationFoundListBox.DataSource = reservations;
             //ReservationFoundListBox.DisplayMember = "FullInfo";
-
-            dataGridView1.DataSource = reservations.OrderByDescending(p=>p.ReservationID).ToList();           
+                        dataGridView1.DataSource = reservations.OrderByDescending(p=>p.ReservationID).ToList();           
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 if ((bool)row.Cells["Accepted"].Value == true)
@@ -99,8 +98,8 @@ namespace RestaurantDesktop
                 UpdateBinding();
             }
             else
-            {
-                reservations = null;
+            {                
+                reservations = db.GetAllReservations();
                 UpdateBinding();
             }
 
