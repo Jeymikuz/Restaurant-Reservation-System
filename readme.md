@@ -1,5 +1,4 @@
-# RestaurantService
-
+# Restaurant Reservation System
 System do zarządzania rezerwacjami w restauracji.
 Aplikacja desktopowa do zarządzania rezerwacjami:
 - dodawanie, akceptowanie oraz usuwanie rezerwacji
