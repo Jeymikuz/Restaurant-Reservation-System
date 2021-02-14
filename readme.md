@@ -1,10 +1,17 @@
 # RestaurantService
 
-Winforms
-Asp.net Core 
+System do zarządzania rezerwacjami w restauracji.
+Aplikacja desktopowa do zarządzania rezerwacjami:
+- dodawanie, akceptowanie oraz usuwanie rezerwacji
+- dodawanie, edytowanie oraz usuwanie dostępnych stolików
 
-## Libs
+Aplikacja webowa:
+- możliwosć rezerwacji tylko dostępnych stolików
 
-Dapper
+## Technologie
+- Winforms
+- Blazor Server-Side
+## Biblioteki
+- Dapper
+- MatBlazor
 
-## Authors
